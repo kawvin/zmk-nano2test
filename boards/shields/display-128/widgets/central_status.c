@@ -237,7 +237,7 @@ static void set_battery_status(struct zmk_widget_status *widget, struct battery_
     draw_all(widget->obj, widget->cbuf, &widget->state);
 }
 
-void battery_status_update_cb(struct battery_state state) {
+static void battery_status_update_cb(struct battery_state state) {
     struct zmk_widget_status *widget;
     SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { set_battery_status(widget, state); }
 }
@@ -346,7 +346,7 @@ static void set_modifiers(struct zmk_widget_status *widget, struct modifiers_sta
     draw_all(widget->obj, widget->cbuf, &widget->state);
 }
 
-void modifiers_update_cb(struct modifiers_state state) {
+static void modifiers_update_cb(struct modifiers_state state) {
     struct zmk_widget_modifiers *widget;
     SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { set_modifiers(widget, state); }
 }
