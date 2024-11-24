@@ -1,0 +1,71 @@
+# Copyright (c) 2024 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+config SHIELD_DISPLAY_128
+    bool "Enable 1.28 LCD"
+
+config ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+    select LV_USE_IMG
+
+if SHIELD_DISPLAY_128
+
+choice ZMK_DISPLAY_STATUS_SCREEN
+    default ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+endchoice
+
+config ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+    select LV_USE_LABEL
+    select LV_USE_IMG
+    select LV_USE_CANVAS
+    select LV_USE_ANIMIMG 
+    select LV_USE_ANIMATION
+    select LV_USE_LINE 
+    select LV_FONT_UNSCII_8
+
+config ZMK_DONGLE_DISPLAY_DONGLE_BATTERY
+    bool "Show also the battery level of the dongle"
+    default n
+
+#    depends on BT && (!ZMK_SPLIT_BLE || ZMK_SPLIT_ROLE_CENTRAL)
+
+if !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
+
+config ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+    select LV_FONT_MONTSERRAT_24
+    select ZMK_WPM
+
+endif # !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
+  
+# 主手 - OLED朝向, 0=0, 1=90, 2=180, 3=270
+config ZMK_KYDISPLAY_CENTRAL_OLED_ORIENTATION 
+    int "Choose the orientation  of central halve oled"
+    default 0
+
+#config CONFIG_ZMK_WIDGET_BATTERY_STATUS_SHOW_PERIPHERAL
+#   default y
+
+choice ZMK_DISPLAY_WORK_QUEUE
+    default ZMK_DISPLAY_WORK_QUEUE_DEDICATED
+endchoice
+
+config GC9A01A
+    bool "Use GC9A01A Dirve For 1.28 LCD"
+    default y
+
+config LV_Z_MEM_POOL_SIZE
+    default 8192
+
+config LV_Z_VDB_SIZE
+    default 64
+
+config LV_DPI_DEF
+    default 148
+
+config LV_Z_BITS_PER_PIXEL
+    default 1
+
+choice LV_COLOR_DEPTH
+    default LV_COLOR_DEPTH_16
+endchoice
+
+endif

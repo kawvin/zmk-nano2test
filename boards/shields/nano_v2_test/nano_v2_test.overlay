@@ -1,0 +1,139 @@
+/*
+ * Copyright (c) 2023 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include "nano_v2_test.dtsi"
+#include <dt-bindings/led/led.h>
+
+
+// &pinctrl {
+//     spi3_default: spi3_default {
+//         group1 {
+//             psels = <NRF_PSEL(SPIM_MOSI, 0, 8)>;
+//         };
+//     };
+
+//     spi3_sleep: spi3_sleep {
+//         group1 {
+//             psels = <NRF_PSEL(SPIM_MOSI, 0, 8)>;
+//             low-power-enable;
+//         };
+//     };
+    
+//     spi1_default: spi1_default {
+//         group1 {
+//             psels = <NRF_PSEL(SPIM_SCK, 0, 20)>, //SCL
+//                 <NRF_PSEL(SPIM_MOSI, 0, 17)>,  //SDA
+//                 <NRF_PSEL(SPIM_MISO, 0, 25)>;
+//         };
+//     };
+//     spi1_sleep: spi1_sleep {
+//         group1 {
+//             psels = <NRF_PSEL(SPIM_SCK, 0, 20)>,    //SCL
+//                 <NRF_PSEL(SPIM_MOSI, 0, 17)>,   //SDA
+//                 <NRF_PSEL(SPIM_MISO, 0, 25)>;
+//             low-power-enable;
+//         };
+//     };
+// };
+
+&spi1 {
+	cs-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;  //CS
+	status = "okay";
+
+	lcd1: lcd1@0 {
+		compatible = "waveshare,gc9a01a";
+		spi-max-frequency = <2000000>;
+		reg = <0>;
+		cmd-data-gpios = <&gpio0 31  GPIO_ACTIVE_HIGH>;  //DC
+		reset-gpios = <&gpio0 21 GPIO_ACTIVE_HIGH>;
+		backlight-gpios = <&gpio0 21 GPIO_ACTIVE_HIGH>;
+		width = <240>;
+		height = <240>;
+		pixel-format = <0>;
+        //display-inversion;
+		rotation = <0>;
+		status = "okay";
+	};
+};
+
+// &spi3 {
+//     compatible = "nordic,nrf-spim";
+//     status = "okay";
+
+//     pinctrl-0 = <&spi3_default>;
+//     pinctrl-1 = <&spi3_sleep>;
+//     pinctrl-names = "default", "sleep";
+
+//     led_strip: ws2812@0 {
+//         compatible = "worldsemi,ws2812-spi";
+
+//         /* SPI */
+//         reg = <0>; /* ignored, but necessary for SPI bindings */
+//         spi-max-frequency = <4000000>;
+
+//         /* WS2812 */
+//         chain-length = <1>; /* arbitrary; change at will */
+//         spi-one-frame = <0x70>;
+//         spi-zero-frame = <0x40>;
+
+//         color-mapping = <
+//             LED_COLOR_ID_GREEN
+//             LED_COLOR_ID_RED
+//             LED_COLOR_ID_BLUE
+//         >;
+//     };
+// };
+
+/ {
+    chosen {
+        zmk,kscan = &kscan;
+        zephyr,display = &lcd1;
+        zmk,underglow = &led_strip;
+    };
+
+    kscan: kscan {
+        compatible = "zmk,kscan-gpio-matrix";
+        wakeup-source;
+
+        diode-direction = "col2row";
+
+        row-gpios
+            = <&gpio0 11 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>   // Row-0
+            , <&gpio0 29 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>   // Row-1
+            , <&gpio0  2 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>   // Row-2
+            , <&gpio1 15 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>   // Row-3
+                 ;
+
+        col-gpios
+            = <&gpio0 10 GPIO_ACTIVE_HIGH>   // Col-0
+            , <&gpio0  9 GPIO_ACTIVE_HIGH>   // Col-1
+            , <&gpio1  6 GPIO_ACTIVE_HIGH>   // Col-2
+            , <&gpio1  4 GPIO_ACTIVE_HIGH>   // Col-3
+            , <&gpio0  7 GPIO_ACTIVE_HIGH>   // Col-4
+            , <&gpio1  0 GPIO_ACTIVE_HIGH>   // Col-5
+            ;
+    };
+
+    left_encoder: left_encoder {
+        compatible = "alps,ec11";
+        steps = <80>;
+        a-gpios = <&gpio0  19 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&gpio0  12 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        status = "okay";
+    };
+
+
+    sensors: sensors {
+        compatible = "zmk,keymap-sensors";
+        //sensors = <&left_encoder1 &right_encoder1>;
+        sensors = <&left_encoder>;
+        triggers-per-rotation = <20>;
+    };
+};
+
+
+
+

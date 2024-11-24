@@ -1,0 +1,30 @@
+# Copyright (c) 2023 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+if SHIELD_NANO_V2_TEST
+
+config ZMK_KEYBOARD_NAME
+    default "nano_v2_test"
+
+config ZMK_RGB_UNDERGLOW
+    select WS2812_STRIP
+    select SPI
+
+
+if ZMK_DISPLAY
+
+config ZMK_DONGLE_DISPLAY_DONGLE_BATTERY
+    bool "Show also the battery level of the dongle"
+    default n
+
+config GC9A01A
+    bool "Use GC9A01A Dirve For 1.28 LCD"
+    default y
+
+# 主手 - OLED朝向, 0=0, 1=90, 2=180, 3=270
+config ZMK_KYDISPLAY_CENTRAL_OLED_ORIENTATION 
+    int "Choose the orientation  of central halve oled"
+    default 0
+
+endif # ZMK_DISPLAY
+endif

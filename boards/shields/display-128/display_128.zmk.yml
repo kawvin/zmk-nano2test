@@ -1,0 +1,9 @@
+file_format: "1"
+id: display_128
+name: display_128
+type: shield
+url: https://github.com/kawvin/display_128
+requires: 
+  - i2c_oled
+features:
+  - display
