@@ -206,7 +206,7 @@ static void draw_all(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
     if (state->layer_label == NULL) {
         char str[10] = {};
         //lv_canvas_draw_text(canvas, pos.x, pos.y, 120, &label_dsc, state->layer_index);
-        sprintf(str, "%d", state->layer_index) // Convert integer to string
+        sprintf(str, "%d", state->layer_index);  // Convert integer to string
         lv_canvas_draw_text(canvas, pos.x, pos.y, 120, &label_dsc, str);
     } else {
         lv_canvas_draw_text(canvas, pos.x, pos.y, 120, &label_dsc, state->layer_label);
