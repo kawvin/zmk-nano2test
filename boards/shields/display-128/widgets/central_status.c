@@ -178,15 +178,13 @@ static void draw_all(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
                 } else {
                 }
             }
+        } else {
+            lv_canvas_draw_img(canvas, 88, 204, &bt_no_icon, &img_dsc);
         }
-    }
-    else {
-        lv_canvas_draw_img(canvas, 88, 204, &bt_no_icon, &img_dsc);
-    }
-    break;
+        break;
 
     // Rotate canvas
-    rotate_canvas(canvas, cbuf);
+    //rotate_canvas(canvas, cbuf);
 
     /*
      if (state.usb_is_hid_ready) {
@@ -214,7 +212,7 @@ static void draw_all(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
     // 绘制Bango_cat---------------------------------
 
     // Rotate canvas
-    rotate_canvas(canvas, cbuf);
+    //  rotate_canvas(canvas, cbuf);
 }
 
 // 以下是battery=======================================================================================
