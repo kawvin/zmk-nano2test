@@ -112,7 +112,7 @@ static void draw_all(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
         */
         if (!state->usb_present) {
             if (state->battery[i] > 90) {
-                lv_img_set_src(symbol, battery_level[3]);
+                //lv_img_set_src(canvas, battery_level[3]);
                 lv_canvas_draw_img(canvas, 116 + (i - 1) * 14, 204, battery_level[3], &img_dsc);
             } else if (state->battery[i] > 60) {
                 lv_canvas_draw_img(canvas, 116 + (i - 1) * 14, 204, battery_level[2], &img_dsc);
@@ -136,7 +136,7 @@ static void draw_all(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
         */
         if (!state->usb_present) {
             if (state->battery[i] > 90) {
-                lv_img_set_src(symbol, battery_level[3]);
+                //lv_img_set_src(canvas, battery_level[3]);
                 lv_canvas_draw_img(canvas, 116 + (i - 1) * 14, 204, battery_level[3], &img_dsc);
             } else if (state->battery[i] > 60) {
                 lv_canvas_draw_img(canvas, 116 + (i - 1) * 14, 204, battery_level[2], &img_dsc);
