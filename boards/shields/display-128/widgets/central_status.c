@@ -204,8 +204,10 @@ static void draw_all(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
     lv_point_t pos = {60, 16}; // 水平居中，垂直居中
 
     if (state->layer_label == NULL) {
-        char text[10] = {};
-        lv_canvas_draw_text(canvas, pos.x, pos.y, 120, &label_dsc, state->layer_index);
+        char str[10] = {};
+        //lv_canvas_draw_text(canvas, pos.x, pos.y, 120, &label_dsc, state->layer_index);
+        sprintf(str, "%d", state->layer_index) // Convert integer to string
+        lv_canvas_draw_text(canvas, pos.x, pos.y, 120, &label_dsc, str);
     } else {
         lv_canvas_draw_text(canvas, pos.x, pos.y, 120, &label_dsc, state->layer_label);
     }
@@ -223,7 +225,7 @@ struct battery_state {
     bool usb_present;
 };
 
-static void set_battery_symbol(struct zmk_widget_status *widget, struct battery_state state) {
+static void set_battery_status(struct zmk_widget_status *widget, struct battery_state state) {
 
 #if IS_ENABLED(CONFIG_USB_DEVICE_STACK)
     // widget->state.charging = state.usb_present;
@@ -237,7 +239,7 @@ static void set_battery_symbol(struct zmk_widget_status *widget, struct battery_
 
 void battery_status_update_cb(struct battery_state state) {
     struct zmk_widget_peripheral_battery_status *widget;
-    SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { set_battery_symbol(widget->obj, state); }
+    SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { set_battery_status(widget, state); }
 }
 
 static struct battery_state peripheral_battery_status_get_state(const zmk_event_t *eh) {
@@ -346,7 +348,7 @@ static void set_modifiers(struct zmk_widget_status *widget, struct modifiers_sta
 
 void modifiers_update_cb(struct modifiers_state state) {
     struct zmk_widget_modifiers *widget;
-    SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { set_modifiers(widget->obj, state); }
+    SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { set_modifiers(widget, state); }
 }
 
 static struct modifiers_state modifiers_get_state(const zmk_event_t *eh) {
