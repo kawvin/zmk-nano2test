@@ -219,12 +219,13 @@ static void draw_all(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
 
 // 以下是battery=======================================================================================
 
+/*
 struct battery_state {
     uint8_t source;
     uint8_t level;
     bool usb_present;
 };
-
+*/
 static void set_battery_status(struct zmk_widget_status *widget, struct battery_state state) {
 
 #if IS_ENABLED(CONFIG_USB_DEVICE_STACK)
