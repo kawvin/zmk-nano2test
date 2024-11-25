@@ -151,7 +151,7 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_point_t pos = {60, 16}; // 水平居中，垂直居中
 
     lv_canvas_draw_text(canvasc240, pos.x, pos.y, 120, &label_dsc, text);
-    rotate_canvas(canvasc240, c240_image_buffer, 0);
+    //rotate_canvas(canvasc240, c240_image_buffer);
     return 0;
 }
 
