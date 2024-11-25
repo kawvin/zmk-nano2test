@@ -72,6 +72,13 @@ LV_IMG_DECLARE(num_2_no_icon);
 LV_IMG_DECLARE(num_3_no_icon);
 LV_IMG_DECLARE(num_4_no_icon);
 LV_IMG_DECLARE(num_5_no_icon);
+
+
+LV_IMG_DECLARE(bongo_cat_none);
+LV_IMG_DECLARE(bongo_cat_both);
+LV_IMG_DECLARE(bongo_cat_left);
+LV_IMG_DECLARE(bongo_cat_right);
+
 // LV_IMG_DECLARE(batterycharge_icon);
 
 const lv_img_dsc_t *sym_num[] = {
