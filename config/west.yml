@@ -18,11 +18,16 @@ manifest:
       url-base: https://github.com/petejohanson  # 添加鼠标的修订
     # Additional modules containing boards/shields/custom code can be listed here as well
     # See https://docs.zephyrproject.org/3.2.0/develop/west/manifest.html#projects
+    - name: kawvin                            # <--- add this
+      url-base: https://github.com/kawvin     # <--- and this
   projects:
     - name: zmk
       remote: zmkfirmware
       # revision: main
       revision: feat/pointers-move-scroll  # 添加鼠标的修订
       import: app/west.yml
+    - name: gc9a01a_zephyr_driver                 # <--- and these
+      remote: kawvin                          # <---
+      revision: main                              # <---
   self:
     path: config
